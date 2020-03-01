@@ -1,20 +1,32 @@
-     let c = document.querySelector("canvas");
+//set context
+let c = document.querySelector("canvas");
      c.width =  500;
      c.height = 500;
      let ctx = c.getContext("2d");
-
 
 	// draw Border of the game 
 	const drawBorder = () =>{
 		ctx.beginPath();
 		ctx.rect(0, 0, c.width, c.height);
-		
 		ctx.stroke();
-		
 	}
+	
+	let curScore = 0;
+	let livesLeft = 0;
+	let levelNum = 0;
+	const addInfo = () =>{
+		ctx.beginPath();
+		ctx.rect(0, 0, 170, 20); // left corner is at 0,0 - width of 170 and height of 20
+		ctx.fillText("SCORE : ", 60, 15);
+		ctx.rect(170, 0, 170, 20);
+		ctx.fillText("LIVES : ", 230, 15);
+		ctx.rect(340, 0, 160, 20);
+		ctx.fillText("LEVEL : ", 390, 15);
+		ctx.stroke();
+	}
+	// Opening Screen with Instructions
 	const OpeningScreen = () =>{
-		drawBorder();
-		
+		drawBorder();	
 		ctx.fillText("Instructions: As Iron Man, you are flying through space, ", (c.width/4), 50);
 		ctx.fillText("avoiding damaging asteroids that hurt your armor,", (c.width/4), 80);
 		ctx.fillText("and collecting boosting infinity stones.", (c.width/4), 110);	
@@ -30,14 +42,12 @@
 			}
 		})
  
-     let radii = [5,10];
 
-//      let mainPlayer = {x:100, y:100, radius: 10};
-//      
-//      
+
+      
      const drawFilledCircle = (initX, initY, color, mainRadius) => {
        drawBorder();
-		 
+		addInfo();
 	   ctx.beginPath();
        ctx.arc(initX, initY, mainRadius, 0, Math.PI*2);
        ctx.fillStyle = color;
@@ -86,16 +96,17 @@
 	 
 	 
 	 let asteroid = {x:250, y:125, radius: 10};
-
+	
 	 const makeAsteroid = () => {
 		 asteroid["y"] += 1;
+		 // condition if reaches/passes bottom of the screen
+		 // 
 		 if(asteroid["y"]  > c.height+asteroid["radius"]){
-            asteroid["y"] = -asteroid["radius"];
+            asteroid["y"] = 20 + asteroid["radius"] ;
 			asteroid["x"] = Math.floor((Math.random() * 490) + 25) ;
           }
+		 
 		 ctx.clearRect(asteroid["x"]-15, asteroid["y"]-15, 28, 28);
-
-// 		 drawBorder();
 		 drawFilledCircle(asteroid["x"], asteroid["y"], "grey", 10);
 		 
 		 window.requestAnimationFrame(makeAsteroid);
@@ -104,12 +115,3 @@
 	 
 	 
 	 OpeningScreen();
- 
-
-
-
-		
-
-
-
-     
