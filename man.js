@@ -57,7 +57,7 @@ let c = document.querySelector("canvas");
 			}
 		})
 	}
-	 let ironManImage = 'flyironman.png';
+	 let ironManImage = 'images/flyironman.png';
 	 let imgObject = new Image();
 	 imgObject.src = ironManImage;
 	
