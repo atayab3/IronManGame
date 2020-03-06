@@ -68,7 +68,7 @@ let c = document.querySelector("canvas");
 		
 	let mPlayer = {
 		mainX:c.width/2, 
-		mainY:500, 
+		mainY:540, 
 		mainRad: Math.floor((imgObject.width*.25)/2)
 	};
 
@@ -82,14 +82,24 @@ let c = document.querySelector("canvas");
 				mPlayer["mainX"] = mPlayer["mainX"] - 5;
 			}
 			else if(e.key == "ArrowUp"){
+				mPlayer["mainY"] = mPlayer["mainY"] - 5;
+			}
+			else if(e.key == "ArrowDown"){
 				mPlayer["mainY"] = mPlayer["mainY"] + 5;
 			}
+			 //edge cases for mainPlayer
 			if(mPlayer["mainX"]  >= 595){
 				mPlayer["mainX"] = 5;
           }
 		    if(mPlayer["mainX"]  < 0){
 				mPlayer["mainX"] = c.width-20-mPlayer["mainRad"];
           }
+			if(mPlayer["mainY"] >=540){
+				mPlayer["mainY"] = 540;
+			}
+			if(mPlayer["mainY"] <= 40){
+				mPlayer["mainY"] = 40;
+			}
 			 console.log(mPlayer);
 		})
 
@@ -128,7 +138,7 @@ let c = document.querySelector("canvas");
 		harmObject["harmY"] = harmObject["harmY"]+ObjectSpeed;
 		benObject["benY"] = benObject["benY"]+ObjectSpeed;
 		//edge case for harm object
-		if(harmObject["harmY"]  > 590+harmObject["hRad"]){
+		if(harmObject["harmY"]  > c.height-10+harmObject["hRad"]){
             harmObject["harmY"] = 30 + harmObject["hRad"];
 			harmObject["harmX"] = Math.floor((Math.random() * 490) + 25) ;
 			curScore = curScore + 10;
@@ -136,7 +146,7 @@ let c = document.querySelector("canvas");
 			console.log("current score" + curScore);
           }
 		//edge case for benefit object
-		if(benObject["benY"]  > 600+benObject["benRad"]){
+		if(benObject["benY"]  > c.height+benObject["benRad"]){
             benObject["benY"] = 30 + benObject["benRad"];
 			benObject["benX"] = Math.floor((Math.random() * 490) + 25) ;
           }
