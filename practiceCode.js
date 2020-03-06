@@ -34,21 +34,7 @@ let c = document.querySelector("canvas");
 		ctx.stroke();
 	}
 	// Opening Screen with Instructions
-	const OpeningScreen = () =>{
-		drawBorder();	
-		ctx.fillText("Instructions: As Iron Man, you are flying through space, ", (c.width/4), 50);
-		ctx.fillText("avoiding damaging asteroids that hurt your armor,", (c.width/4), 80);
-		ctx.fillText("and collecting boosting infinity stones.", (c.width/4), 110);	
-		ctx.fillText("Press 'Enter' to Start the Game.", (c.width/4), 140);
-		document.addEventListener("keydown", (e)=> {
-			if(e.key == "Enter"){
-				  ctx.clearRect(0, 0, c.width, c.height);
-				  mainCharacter();
-				  makeAsteroid();
-// 				  GameOverScreen();
-			}
-		})
-	}
+	
 	
 	const GameOverScreen = () =>{
 		console.log(livesLeft);

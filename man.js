@@ -16,11 +16,14 @@ let c = document.querySelector("canvas");
 	let levelNum = 0;
 	const addInfo = () =>{
 		ctx.beginPath();
-		
+		ctx.fillStyle = "black";
 		ctx.font = "20px serif";
 		ctx.rect(0, 0, 200, 30); // left corner is at 0,0 - width of 170 and height of 20
 		let scoreStatement = "SCORE  : " + curScore;
 		ctx.fillText(scoreStatement, 50, 20);
+		
+		
+		
 		
 		ctx.rect(200, 0, 200, 30);
 		let livesStatement = "LIVES  : " + livesLeft;
@@ -34,11 +37,29 @@ let c = document.querySelector("canvas");
 		ctx.stroke();
 	}
 	
-	 let ironManImage = 'flyIronman.PNG';
+	const OpeningScreen = () =>{
+		drawBorder();
+		ctx.font = "20px Georgia";
+		ctx.fillText("Instructions: ", c.width/2 - 70, 50);
+		ctx.fillText("Iron Man, The World Needs Your Help!", c.width/2 - 170, 90);
+		ctx.fillText("As Earth's Best Defender",  c.width/2 - 170, 130);
+		ctx.fillText("You need to fly through space while",  c.width/2 - 170, 170);
+		ctx.fillText("avoiding asteroids that hurt your armor,",  c.width/2 - 170, 210);
+		ctx.fillText("and collecting infinity stones to stop Thanos",  c.width/2 - 170, 250);	
+		ctx.fillText("Press 'Enter' to Begin.",  c.width/2 - 170, 290);
+		document.addEventListener("keydown", (e)=> {
+			if(e.key == "Enter"){
+				   moveMainGuy();
+					startGame();
+// 				  GameOverScreen();
+			}
+		})
+	}
+	 let ironManImage = 'flyironman.png';
 	 let imgObject = new Image();
 	 imgObject.src = ironManImage;
 	
-	let spaceImage = "https://lh5.googleusercontent.com/proxy/VORBfXRU0IdYcXKBzi6dQ6M4pDE3DUZN1USbdYVHDmg70Q7CXPDmRxk6zVJMNoe8GS6GBNk__zaqk5P8_w3xirs-5Q";
+	let spaceImage = "https://i.pinimg.com/originals/e5/da/3c/e5da3cb3fbe9af8f2198f3459e72424a.png";
 	let spaceObj = new Image();
 	spaceObj.src = spaceImage;
 	
@@ -60,6 +81,9 @@ let c = document.querySelector("canvas");
 			else if(e.key == "ArrowLeft"){
 				mPlayer["mainX"] = mPlayer["mainX"] - 5;
 			}
+			else if(e.key == "ArrowUp"){
+				mPlayer["mainY"] = mPlayer["mainY"] + 5;
+			}
 			if(mPlayer["mainX"]  >= 595){
 				mPlayer["mainX"] = 5;
           }
@@ -80,7 +104,7 @@ let c = document.querySelector("canvas");
 		hRad:20,
 		hColor:"grey"
 	};
-let benObject = {
+	let benObject = {
 		benX : c.width/5, 
 		benY:50, 
 		benRad:10,
@@ -99,7 +123,7 @@ let benObject = {
 		ctx.clearRect(0, 0, c.width, c.height) ;
 		addInfo();
 		drawBorder();
-		let ObjectSpeed = Math.floor(curScore / 50) + .5;
+		let ObjectSpeed = Math.floor(curScore / 50)/3 + 1;
 		console.log(ObjectSpeed);
 		harmObject["harmY"] = harmObject["harmY"]+ObjectSpeed;
 		benObject["benY"] = benObject["benY"]+ObjectSpeed;
@@ -121,7 +145,7 @@ let benObject = {
 		
 		
 
-		ctx.drawImage(spaceObj, 0, 30, spaceObj.width *1.2 , spaceObj.height*3);
+		ctx.drawImage(spaceObj, 0, 30, 600, 570);
 
 		ctx.drawImage(imgObject, mPlayer["mainX"], mPlayer["mainY"], imgObject.width*.25, imgObject.height*.25 );
 
@@ -131,8 +155,9 @@ let benObject = {
 		
 	}
 	
+OpeningScreen();
 
- moveMainGuy();
-	startGame();
+
+
 
 
