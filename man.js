@@ -39,14 +39,16 @@ let c = document.querySelector("canvas");
 	
 	const OpeningScreen = () =>{
 		drawBorder();
-		ctx.font = "20px Georgia";
-		ctx.fillText("Instructions: ", c.width/2 - 70, 50);
+		ctx.font = "20px  Palatino";
+		ctx.fillText("Instructions: ", c.width/2 - 60, 50);
 		ctx.fillText("Iron Man, The World Needs Your Help!", c.width/2 - 170, 90);
 		ctx.fillText("As Earth's Best Defender",  c.width/2 - 170, 130);
 		ctx.fillText("You need to fly through space while",  c.width/2 - 170, 170);
 		ctx.fillText("avoiding asteroids that hurt your armor,",  c.width/2 - 170, 210);
-		ctx.fillText("and collecting infinity stones to stop Thanos",  c.width/2 - 170, 250);	
-		ctx.fillText("Press 'Enter' to Begin.",  c.width/2 - 170, 290);
+		ctx.fillText("and collecting infinity stones to stop Thanos.",  c.width/2 - 170, 250);
+		ctx.fillText("Every 50 points results in a level increase",  c.width/2 - 170, 290);
+		ctx.fillText("and objects in the orbit will come at you faster.",  c.width/2 - 170, 330);
+		ctx.fillText("Press 'Enter' to Begin.",  c.width/2 - 100, 370);
 		document.addEventListener("keydown", (e)=> {
 			if(e.key == "Enter"){
 				   moveMainGuy();
@@ -69,7 +71,7 @@ let c = document.querySelector("canvas");
 	let mPlayer = {
 		mainX:c.width/2, 
 		mainY:540, 
-		mainRad: Math.floor((imgObject.width*.25)/2)
+		mainRad: 15
 	};
 
 	
@@ -100,7 +102,7 @@ let c = document.querySelector("canvas");
 			if(mPlayer["mainY"] <= 40){
 				mPlayer["mainY"] = 40;
 			}
-			 console.log(mPlayer);
+// 			 console.log(mPlayer);
 		})
 
 				
@@ -134,7 +136,7 @@ let c = document.querySelector("canvas");
 		addInfo();
 		drawBorder();
 		let ObjectSpeed = Math.floor(curScore / 50)/3 + 1;
-		console.log(ObjectSpeed);
+// 		console.log(ObjectSpeed);
 		harmObject["harmY"] = harmObject["harmY"]+ObjectSpeed;
 		benObject["benY"] = benObject["benY"]+ObjectSpeed;
 		//edge case for harm object
@@ -143,15 +145,32 @@ let c = document.querySelector("canvas");
 			harmObject["harmX"] = Math.floor((Math.random() * 490) + 25) ;
 			curScore = curScore + 10;
 			levelNum = Math.floor(curScore / 50);
-			console.log("current score" + curScore);
+// 			console.log("current score" + curScore);
           }
 		//edge case for benefit object
 		if(benObject["benY"]  > c.height+benObject["benRad"]){
             benObject["benY"] = 30 + benObject["benRad"];
 			benObject["benX"] = Math.floor((Math.random() * 490) + 25) ;
           }
-		//handle collision between main Player and harm Object
+		//handle collision between main Player and benefit Object
+// 		console.log(imgObject.width*.25);
+// 		console.log(imgObject.height*.25);
 		
+// 		let ovalHeight = (imgObject.height*.25)/2;
+// 		let ovalWidth = (imgObject.width*.25)/2;
+		if(Math.sqrt( (benObject["benY"]-mPlayer["mainY"]) + (benObject["benX"]-mPlayer["mainX"]) ) < benObject["benRad"]+mPlayer["mainRad"]){
+			livesLeft++;
+			benObject["benX"] = c.width/4;
+			benObject["benY"] =50;
+		}
+// 		collisions between harm object and Player
+		if(Math.sqrt( Math.pow((harmObject["harmY"]-mPlayer["mainY"]),2) + Math.pow((harmObject["harmX"]-mPlayer["mainX"]),2) ) < harmObject["hRad"]+mPlayer["mainRad"]){
+			livesLeft--;
+			mPlayer["mainX"] = c.width/2;
+			mPlayer["mainX"] = 540;
+			harmObject["harmX"] = c.width/2;
+			harmObject["harmY"] =50;
+		}
 		
 		
 
