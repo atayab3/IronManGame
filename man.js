@@ -159,7 +159,7 @@ let c = document.querySelector("canvas");
 // 		let ovalHeight = (imgObject.height*.25)/2;
 // 		let ovalWidth = (imgObject.width*.25)/2;
 		if(Math.sqrt( (benObject["benY"]-mPlayer["mainY"]) + (benObject["benX"]-mPlayer["mainX"]) ) < benObject["benRad"]+mPlayer["mainRad"]){
-			livesLeft++;
+			curScore= curScore + 10;
 			benObject["benX"] = c.width/4;
 			benObject["benY"] =50;
 		}
