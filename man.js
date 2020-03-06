@@ -1,17 +1,16 @@
 //set context
 let c = document.querySelector("canvas");
-     c.width =  500;
-     c.height = 500;
+     c.width =  600;
+     c.height = 600;
      let ctx = c.getContext("2d");
 
-	// draw Border of the game 
 	const drawBorder = () =>{
 		ctx.beginPath();
-		ctx.rect(0, 0, c.width, c.height);
+		ctx.rect(0, 30, c.width, 570);
 		ctx.stroke();
+		
 	}
-	
-	//global vars for information 
+	//global variables
 	let curScore = 0;
 	let livesLeft = 3;
 	let levelNum = 0;
@@ -19,125 +18,121 @@ let c = document.querySelector("canvas");
 		ctx.beginPath();
 		
 		ctx.font = "20px serif";
-		ctx.rect(0, 0, 170, 30); // left corner is at 0,0 - width of 170 and height of 20
+		ctx.rect(0, 0, 200, 30); // left corner is at 0,0 - width of 170 and height of 20
 		let scoreStatement = "SCORE  : " + curScore;
-// 		console.log(curScore);
-		ctx.fillText(scoreStatement, 40, 20);
+		ctx.fillText(scoreStatement, 50, 20);
 		
-		ctx.rect(170, 0, 170, 30);
+		ctx.rect(200, 0, 200, 30);
 		let livesStatement = "LIVES  : " + livesLeft;
-		ctx.fillText(livesStatement, 210, 20);
+		ctx.fillText(livesStatement, 250, 20);
 		
 		
-		ctx.rect(340, 0, 160, 30);
+		ctx.rect(400, 0, 200, 30);
 		let levelStatement = "LEVEL : " + levelNum;
-		ctx.fillText(levelStatement, 370, 20);
+		ctx.fillText(levelStatement, 450, 20);
 		
 		ctx.stroke();
 	}
 	
-	// Opening Screen with Instructions
-	const OpeningScreen = () =>{
-		drawBorder();	
-		ctx.fillText("Instructions: As Iron Man, you are flying through space, ", (c.width/4), 50);
-		ctx.fillText("avoiding damaging asteroids that hurt your armor,", (c.width/4), 80);
-		ctx.fillText("and collecting boosting infinity stones.", (c.width/4), 110);	
-		ctx.fillText("Press 'Enter' to Start the Game.", (c.width/4), 140);
-		document.addEventListener("keydown", (e)=> {
-			if(e.key == "Enter"){
-				  ctx.clearRect(0, 0, c.width, c.height);
-				  mainCharacter();
-				  makeAsteroid();
-// 				  GameOverScreen();
+	 let ironManImage = 'flyIronman.PNG';
+	 let imgObject = new Image();
+	 imgObject.src = ironManImage;
+	
+	let spaceImage = "https://lh5.googleusercontent.com/proxy/VORBfXRU0IdYcXKBzi6dQ6M4pDE3DUZN1USbdYVHDmg70Q7CXPDmRxk6zVJMNoe8GS6GBNk__zaqk5P8_w3xirs-5Q";
+	let spaceObj = new Image();
+	spaceObj.src = spaceImage;
+	
+
+
+		
+	let mPlayer = {
+		mainX:c.width/2, 
+		mainY:500, 
+		mainRad: Math.floor((imgObject.width*.25)/2)
+	};
+
+	
+	const moveMainGuy = () =>{
+		 document.addEventListener("keydown", (e)=> {
+			if(e.key == "ArrowRight"){
+				mPlayer["mainX"] = mPlayer["mainX"] + 5;
 			}
+			else if(e.key == "ArrowLeft"){
+				mPlayer["mainX"] = mPlayer["mainX"] - 5;
+			}
+			if(mPlayer["mainX"]  >= 595){
+				mPlayer["mainX"] = 5;
+          }
+		    if(mPlayer["mainX"]  < 0){
+				mPlayer["mainX"] = c.width-20-mPlayer["mainRad"];
+          }
+			 console.log(mPlayer);
 		})
+
+				
+		
 	}
-	
-	const GameOverScreen = () =>{
-		console.log(livesLeft);
-			if(livesLeft == 0 ){
-			drawBorder();
-			ctx.font = "50px serif";
-			ctx.fillText("G A M E  O V E R ", 200, 250);
-			}
-	}
-	
-      
-     const drawFilledCircle = (initX, initY, color, mainRadius) => {
-       drawBorder();
-	   addInfo();
+
+
+	let harmObject = {
+		harmX : c.width/2, 
+		harmY:50, 
+		hRad:20,
+		hColor:"grey"
+	};
+let benObject = {
+		benX : c.width/5, 
+		benY:50, 
+		benRad:10,
+		bColor:"green"
+	};
+	const createObject = (valX, valY, rad, color ) =>{
 	   ctx.beginPath();
-       ctx.arc(initX, initY, mainRadius, 0, Math.PI*2);
+       ctx.arc(valX, valY, rad, 0, Math.PI*2);
        ctx.fillStyle = color;
        ctx.closePath();
        ctx.fill();
 	   ctx.stroke();
-		 
-// 		var imgIronMan = new Image();
-// 		imgIronMan.src = "flyIronman.PNG";
-// 		ctx.drawImage(imgIronMan, 700, 700);
-     }
-	 
-	 let mPlayer = {mainX:c.width/2, mainY:480, mainColor:"red" , mainRad: 10};
-     const mainCharacter = () => {
-		 		
-		 drawFilledCircle(mPlayer["mainX"], mPlayer["mainY"], mPlayer["mainColor"], mPlayer["mainRad"]); 
-		 
-		 document.addEventListener("keydown", (e)=> {
-			if(e.key == "ArrowRight"){
-				mPlayer["mainX"] = mPlayer["mainX"] + 20;
-				ctx.clearRect(mPlayer["mainX"]-(mPlayer["mainRad"]*3+1), mPlayer["mainY"]-(mPlayer["mainRad"]+2), 23, 23);
-			}
-			else if(e.key == "ArrowLeft"){
-				mPlayer["mainX"] = mPlayer["mainX"] - 20;
-				ctx.clearRect(mPlayer["mainX"]+mPlayer["mainRad"], mPlayer["mainY"]-(mPlayer["mainRad"]+1), 22, 22);
-			}
-			if(mPlayer["mainX"]  > c.width){
-            mPlayer["mainX"] = mPlayer["mainRad"];
-// 			asteroid["x"] = Math.floor((Math.random() * 490) + 25) ;
-          }
-		    if(mPlayer["mainX"]  < mPlayer["mainRad"]){
-            mPlayer["mainX"] = c.width-mPlayer["mainRad"];
-// 			asteroid["x"] = Math.floor((Math.random() * 490) + 25) ;
-          }
-			 drawFilledCircle(mPlayer["mainX"], mPlayer["mainY"], mPlayer["mainColor"], mPlayer["mainRad"] );
-			 console.log(mPlayer);
-		})
-		 
-		 //working on edge cases
-// 		 if(mainX > c.width){
-// 			   mainX = 50 ;
-// 		  }
-// 		 else if(mainX == 0){
-// 			 mainX = c.width - 50;
-// 		 }
-// 		 ctx.clearRect(0, 0, c.width, c.height);
-// 		 drawFilledCircle(mainX, mainY, color, mainRadius);
-		 
-     }
-	 
-	 //Harm object
-	 let asteroid = {x:250, y:125, radius: 10};
-	 let numAsteroidsPassed = 0;
-	 const makeAsteroid = () => {
-		 asteroid["y"] += 1;
-		 // condition if reaches/passes bottom of the screen
-		 // 
-		 if(asteroid["y"]  > c.height+asteroid["radius"]){
-            asteroid["y"] = 30 + asteroid["radius"] ;
-			asteroid["x"] = Math.floor((Math.random() * 490) + 25) ;
-			numAsteroidsPassed++;
+		
+	}
+	const startGame = () =>{
+		ctx.clearRect(0, 0, c.width, c.height) ;
+		addInfo();
+		drawBorder();
+		let ObjectSpeed = Math.floor(curScore / 50) + .5;
+		console.log(ObjectSpeed);
+		harmObject["harmY"] = harmObject["harmY"]+ObjectSpeed;
+		benObject["benY"] = benObject["benY"]+ObjectSpeed;
+		//edge case for harm object
+		if(harmObject["harmY"]  > 590+harmObject["hRad"]){
+            harmObject["harmY"] = 30 + harmObject["hRad"];
+			harmObject["harmX"] = Math.floor((Math.random() * 490) + 25) ;
 			curScore = curScore + 10;
+			levelNum = Math.floor(curScore / 50);
 			console.log("current score" + curScore);
-			console.log(asteroid);
           }
-		 
-		 ctx.clearRect(asteroid["x"]-15, asteroid["y"]-15, 28, 28);
-		 drawFilledCircle(asteroid["x"], asteroid["y"], "grey", 10);
-		 
-		 window.requestAnimationFrame(makeAsteroid);
-	 }
-	 
-	 
-	 
-	 OpeningScreen();
+		//edge case for benefit object
+		if(benObject["benY"]  > 600+benObject["benRad"]){
+            benObject["benY"] = 30 + benObject["benRad"];
+			benObject["benX"] = Math.floor((Math.random() * 490) + 25) ;
+          }
+		//handle collision between main Player and harm Object
+		
+		
+		
+
+		ctx.drawImage(spaceObj, 0, 30, spaceObj.width *1.2 , spaceObj.height*3);
+
+		ctx.drawImage(imgObject, mPlayer["mainX"], mPlayer["mainY"], imgObject.width*.25, imgObject.height*.25 );
+
+		createObject(harmObject["harmX"], harmObject["harmY"], harmObject["hRad"], harmObject["hColor"] );
+		createObject(benObject["benX"], benObject["benY"], benObject["benRad"], benObject["bColor"] );
+		window.requestAnimationFrame(startGame);
+		
+	}
+	
+
+ moveMainGuy();
+	startGame();
+
+
