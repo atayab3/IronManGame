@@ -63,8 +63,8 @@ let c = document.querySelector("canvas");
 		ctx.fillStyle = "black";
 		ctx.font = "40px  Palatino";
 // 		ctx.fillText("GAME OVER",  c.width/2 - 170, 20);
-		ctx.fillText("You have lost",  c.width/2 - 140, 70);
-		ctx.fillText("We're in the EndGame now, Tony",  c.width/2 - 140, 150);
+		ctx.fillText("You have lost",  c.width/2 - 150, 160);
+		ctx.fillText("You are in the EndGame now",  c.width/2 - 250, 200);
 		ctx.endPath() ;
 
 	}
@@ -82,7 +82,7 @@ let c = document.querySelector("canvas");
 	let mPlayer = {
 		mainX:c.width/2, 
 		mainY:540, 
-		mainRad: 30
+		mainRad: 25
 	};
 
 	
@@ -164,14 +164,18 @@ let c = document.querySelector("canvas");
 			benObject["benX"] = Math.floor((Math.random() * 490) + 25) ;
           }
 		//handle collision between main Player and benefit Object
-
-		if(Math.sqrt( Math.pow((benObject["benY"]-(mPlayer["mainY"]+25) ),2) + Math.pow((benObject["benX"]-(mPlayer["mainX"] +15),2 ) )> benObject["benRad"]+mPlayer["mainRad"]+5 {
+// 		console.log(imgObject.width*.25);
+// 		console.log(imgObject.height*.25);
+		
+// 		let ovalHeight = (imgObject.height*.25)/2;
+// 		let ovalWidth = (imgObject.width*.25)/2;
+		if(Math.sqrt( Math.pow((benObject["benY"]-mPlayer["mainY"]),2) + Math.pow((benObject["benX"]-mPlayer["mainX"]),2 ) )<= benObject["benRad"]+mPlayer["mainRad"]){
 			curScore= curScore + 10;
 			benObject["benX"] = c.width/4;
 			benObject["benY"] =50;
 		}
 // 		collisions between harm object and Player
-		if(Math.sqrt( Math.pow((harmObject["harmY"]-(mPlayer["mainY"]+25) ),2) + Math.pow((harmObject["harmX"]-(mPlayer["mainX"]+15),2) ) <= harmObject["hRad"]+mPlayer["mainRad"]+5){
+		if(Math.sqrt( Math.pow((harmObject["harmY"]-mPlayer["mainY"]),2) + Math.pow((harmObject["harmX"]-mPlayer["mainX"]),2) ) <= harmObject["hRad"]+mPlayer["mainRad"]){
 			livesLeft--;
 			mPlayer["mainX"] = c.width/2;
 			mPlayer["mainX"] = 540;
@@ -195,8 +199,3 @@ let c = document.querySelector("canvas");
 	}
 	
 OpeningScreen();
-
-
-
-
-
