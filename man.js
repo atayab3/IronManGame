@@ -63,7 +63,8 @@ let c = document.querySelector("canvas");
 		ctx.fillStyle = "black";
 		ctx.font = "40px  Palatino";
 // 		ctx.fillText("GAME OVER",  c.width/2 - 170, 20);
-		ctx.fillText("GAME OVER",  c.width/2 - 140, 70);
+		ctx.fillText("You have lost",  c.width/2 - 140, 70);
+		ctx.fillText("We're in the EndGame now, Tony",  c.width/2 - 140, 150);
 		ctx.endPath() ;
 
 	}
