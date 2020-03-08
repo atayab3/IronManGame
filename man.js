@@ -21,9 +21,6 @@ let c = document.querySelector("canvas");
 		let scoreStatement = "SCORE  : " + curScore;
 		ctx.fillText(scoreStatement, 50, 20);
 		
-		
-		
-		
 		ctx.rect(200, 0, 200, 30);
 		let livesStatement = "LIVES  : " + livesLeft;
 		ctx.fillText(livesStatement, 250, 20);
@@ -52,9 +49,7 @@ let c = document.querySelector("canvas");
 			if(e.key == "Enter"){
 				   moveMainGuy();
 					startGame();
-				if(livesLeft == 0){
-					EndScreen();
-				}
+				
 // 				  GameOverScreen();
 			}
 		})
@@ -62,10 +57,15 @@ let c = document.querySelector("canvas");
 	
 
 	const EndScreen = () =>{
+		ctx.clearRect(0, 0, c.width, c.height);
 		drawBorder();
+		ctx.beginPath();
+		ctx.fillStyle = "black";
 		ctx.font = "40px  Palatino";
+// 		ctx.fillText("GAME OVER",  c.width/2 - 170, 20);
+		ctx.fillText("GAME OVER",  c.width/2 - 170, 70);
+		ctx.endPath() ;
 
-		ctx.fillText("END SCREEN",  c.width/2 - 170, 210);
 	}
 	 let ironManImage = "https://i.pinimg.com/originals/38/93/cd/3893cd8d215b3ee643d05960613d4213.png";
 	 let imgObject = new Image();
@@ -182,7 +182,9 @@ let c = document.querySelector("canvas");
 			harmObject["harmY"] =50;
 		}
 		
-		
+		if(livesLeft <= 0){
+			EndScreen();
+		}
 
 		ctx.drawImage(spaceObj, 0, 30, 600, 570);
 		console.log(imgObject.width*.05);
