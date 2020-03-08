@@ -8,7 +8,6 @@ let c = document.querySelector("canvas");
 		ctx.beginPath();
 		ctx.rect(0, 30, c.width, 570);
 		ctx.stroke();
-		
 	}
 	//global variables
 	let curScore = 0;
@@ -57,7 +56,7 @@ let c = document.querySelector("canvas");
 			}
 		})
 	}
-	 let ironManImage = 'images/flyironman.png';
+	 let ironManImage = "https://i.pinimg.com/originals/38/93/cd/3893cd8d215b3ee643d05960613d4213.png";
 	 let imgObject = new Image();
 	 imgObject.src = ironManImage;
 	
@@ -176,7 +175,7 @@ let c = document.querySelector("canvas");
 
 		ctx.drawImage(spaceObj, 0, 30, 600, 570);
 
-		ctx.drawImage(imgObject, mPlayer["mainX"], mPlayer["mainY"], imgObject.width*.25, imgObject.height*.25 );
+		ctx.drawImage(imgObject, mPlayer["mainX"], mPlayer["mainY"], imgObject.width*.15, imgObject.height*.15 );
 
 		createObject(harmObject["harmX"], harmObject["harmY"], harmObject["hRad"], harmObject["hColor"] );
 		createObject(benObject["benX"], benObject["benY"], benObject["benRad"], benObject["bColor"] );
