@@ -52,9 +52,20 @@ let c = document.querySelector("canvas");
 			if(e.key == "Enter"){
 				   moveMainGuy();
 					startGame();
+				if(livesLeft == 0){
+					EndScreen();
+				}
 // 				  GameOverScreen();
 			}
 		})
+	}
+	
+
+	const EndScreen = () =>{
+		drawBorder();
+		ctx.font = "40px  Palatino";
+
+		ctx.fillText("END SCREEN",  c.width/2 - 170, 210);
 	}
 	 let ironManImage = "https://i.pinimg.com/originals/38/93/cd/3893cd8d215b3ee643d05960613d4213.png";
 	 let imgObject = new Image();
@@ -157,13 +168,13 @@ let c = document.querySelector("canvas");
 		
 // 		let ovalHeight = (imgObject.height*.25)/2;
 // 		let ovalWidth = (imgObject.width*.25)/2;
-		if(Math.sqrt( Math.pow((benObject["benY"]-mPlayer["mainY"]),2) + Math.pow((benObject["benX"]-mPlayer["mainX"]),2 ) )< benObject["benRad"]+mPlayer["mainRad"]){
+		if(Math.sqrt( Math.pow((benObject["benY"]-mPlayer["mainY"]),2) + Math.pow((benObject["benX"]-mPlayer["mainX"]),2 ) )<= benObject["benRad"]+mPlayer["mainRad"]){
 			curScore= curScore + 10;
 			benObject["benX"] = c.width/4;
 			benObject["benY"] =50;
 		}
 // 		collisions between harm object and Player
-		if(Math.sqrt( Math.pow((harmObject["harmY"]-mPlayer["mainY"]),2) + Math.pow((harmObject["harmX"]-mPlayer["mainX"]),2) ) < harmObject["hRad"]+mPlayer["mainRad"]){
+		if(Math.sqrt( Math.pow((harmObject["harmY"]-mPlayer["mainY"]),2) + Math.pow((harmObject["harmX"]-mPlayer["mainX"]),2) ) <= harmObject["hRad"]+mPlayer["mainRad"]){
 			livesLeft--;
 			mPlayer["mainX"] = c.width/2;
 			mPlayer["mainX"] = 540;
@@ -174,8 +185,9 @@ let c = document.querySelector("canvas");
 		
 
 		ctx.drawImage(spaceObj, 0, 30, 600, 570);
-
-		ctx.drawImage(imgObject, mPlayer["mainX"], mPlayer["mainY"], imgObject.width*.15, imgObject.height*.15 );
+		console.log(imgObject.width*.05);
+		console.log(imgObject.height*.05);
+		ctx.drawImage(imgObject, mPlayer["mainX"], mPlayer["mainY"], imgObject.width*.05, imgObject.height*.05 );
 
 		createObject(harmObject["harmX"], harmObject["harmY"], harmObject["hRad"], harmObject["hColor"] );
 		createObject(benObject["benX"], benObject["benY"], benObject["benRad"], benObject["bColor"] );
