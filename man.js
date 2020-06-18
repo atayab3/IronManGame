@@ -1,8 +1,8 @@
 
 //set canvas and context
 let c = document.querySelector("canvas");
-     c.width =  document.documentElement.clientWidth * 0.5;
-     c.height = document.documentElement.clientHeight;
+     c.width =  document.documentElement.clientWidth * 0.9;
+     c.height = document.documentElement.clientHeight * 0.9;
      let ctx = c.getContext("2d");
 	
 	//draw rectangular border where game is played
@@ -55,20 +55,20 @@ let c = document.querySelector("canvas");
 
 	
 	const moveMainGuy = () =>{
-// 		if(window.DeviceOrientationEvent){
-// 			console.log("Device orientation supported");
-// 			window.addEventListener("deviceorientation", (e)=>{
-// 				var x = e.gamma;
-// 				var y = e.beta;
-// 				mPlayer["mainX"] += x;
-// 				mPlayer["mainY"] += y;				
+		if(window.DeviceOrientationEvent){
+			console.log("Device orientation supported");
+			window.addEventListener("deviceorientation", (e)=>{
+				var x = e.gamma;
+				var y = e.beta;
+				mPlayer["mainX"] += x;
+				mPlayer["mainY"] += y;				
 				
-// 			}, false);
+			}, false);
  
-// 		}
-// 		else{
-// 			console.log("device orient not supported");
-// 		}
+		}
+		else{
+			console.log("device orient not supported");
+		}
  
 		 document.addEventListener("keydown", (e)=> {
 			if(e.key == "ArrowRight"){
