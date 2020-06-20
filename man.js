@@ -29,16 +29,20 @@ let c = document.querySelector("canvas");
 
 	// Opening Screen with instructions, Press Enter to call game functions
 	const OpeningScreen = () =>{
-		drawBorder();
-		document.addEventListener("keydown", (e)=> {
+		moveMainGuy();
+		startGame(); 
+// 		drawBorder();
+// 		document.addEventListener("keydown", (e)=> {
 			
-			// FIX ME : pressing enter repeatedly causes the game to increase in speed wayy to much 
-			if(e.key == "Enter"){
-				   moveMainGuy();
-					startGame(); 
-			}
-		}, { once: true }  // FIX was found in this link https://medium.com/beginners-guide-to-mobile-web-development/one-off-event-listeners-in-javascript-92e19c4c0336
-		)
+// 			// FIX ME : pressing enter repeatedly causes the game to increase in speed wayy to much 
+// 			if(e.key == "Enter"){
+// 				   moveMainGuy();
+// 					startGame(); 
+// 			}
+// 		}, { once: true }  // FIX was found in this link https://medium.com/beginners-guide-to-mobile-web-development/one-off-event-listeners-in-javascript-92e19c4c0336
+// 		)
+	
+	
 	}
 	
 	//Screen that comes up when user has lost all three lives
@@ -52,19 +56,18 @@ let c = document.querySelector("canvas");
 		ctx.endPath() ;
 	}
 	
-
+const handleOrientation = (e) => {
+    var z = e.alpha;
+    var y = e.beta;
+    var x = e.gamma;
+    mPlayer["mainX"] += x;
+    mPlayer["mainY"] += y;
+}
 	
 	const moveMainGuy = () =>{
 		if(window.DeviceOrientationEvent){
 			console.log("Device orientation supported");
-			window.addEventListener("deviceorientation", (e)=>{
-				var x = e.gamma;
-				var y = e.beta;
-				mPlayer["mainX"] += x;
-				mPlayer["mainY"] += y;				
-				
-			}, false);
- 
+			window.addEventListener("deviceorientation", this.handleOrientation, true);
 		}
 		else{
 			console.log("device orient not supported");
